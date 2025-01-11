@@ -1,0 +1,20 @@
+{
+  "name": "desafio-lacrei-2025",
+  "version": "1.0.0",
+  "description": "Desafio proposto pela Lacrei - organização sem fins lucrativos que atua na promoção da inclusão, equidade e acessibilidade de serviços para pessoas LGBTQIA+ - no processo de voluntariado ao cargo de Analista de Quality Assurance.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "^13.17.0",
+    "cypress-cucumber-preprocessor": "^4.3.1"
+  },
+  "cypress-cucumber-preprocessor": {
+    "nonGlobalStepDefinitions": true,
+    "stepDefinitions": "cypress/e2e/step-definitions"
+  }
+
+}
