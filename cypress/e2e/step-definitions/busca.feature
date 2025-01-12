@@ -1,9 +1,16 @@
-Feature: Busca de um profissional de saúde
+Feature: Busca por profissionais
 
-  Scenario: Busca realizada com sucesso
-    Given estou logado na página
-    When digito "Medico gay"
+  Scenario: Buscar por um profissional no iPhone 6
+    Given estou logado na página no iPhone 6
+    When digito "Dentista"
     And clico em "Buscar"
-    Then recebo uma lista de resultados
+    Then recebo uma lista de resultados no iPhone 6
+
+  Scenario: Buscar por um profissional no MacBook 11
+    Given estou logado na página no MacBook 11
+    When digito "Dentista"
+    And clico em "Buscar"
+    Then recebo uma lista de resultados no MacBook 11
+
 
 
