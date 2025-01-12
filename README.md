@@ -579,14 +579,22 @@ Pontos de atenção:
 Embora a maioria das requisições tenham sido rápidas, a latência máxima de 826.97 ms pode ser um sinal de que, sob maior carga, o site pode começar a apresentar lentidão. Isso pode ser mais visível em horários de pico ou com maior número de usuários simultâneos. 
 Se o site for destinado a suportar grandes volumes de acesso, é essencial considerar otimizações no backend, balanceamento de carga ou mesmo melhorias na infraestrutura para manter os tempos de resposta dentro de padrões aceitáveis, mesmo em picos de tráfego.
 ```
+>**NOTE**
+>
+>Ver vídeos da execução do teste de performance na pasta:
+>
+>cypress/performance/perfor_acesso.js
 
-## ♿️ Testes de manuais de acessibilidade
+
+## ♿️ Testes manuais de acessibilidade
 
 Os testes de acessibilidade foram realizados manualmente, com a verificação do funcionamento do plugin VLibras, o qual operou corretamente tanto nas versões mobile quanto desktop. Quanto a outras melhorias de acessibilidade, elas estão detalhadas no próximo tópico.
+
 
 ## 🐛 Registro de bugs e melhorias
 
 Foram realizados testes abrangentes para identificar possíveis bugs e áreas de melhoria na aplicação. Todos os problemas encontrados, bem como as sugestões de melhorias, foram devidamente analisados e estão relatados de forma detalhada no documento disponível na pasta: cypress/Relatório de Bugs e Melhorias. Este relatório contém informações sobre o comportamento do sistema, impactos das falhas e propostas de correções ou ajustes.
+
 
 ## 🎯 Considerações Finais
 
