@@ -12,9 +12,10 @@ O desafio propõe realizar uma série de atividades de Quality Assurance no ambi
 - [x] Tarefa 1 - ✔️  Configuração do ambiente de testes
 - [x] Tarefa 2 - ✔️  Criação e documentação de casos de teste (Versão Mobile);
 - [x] Tarefa 3 - ✔️  Execução com Automação de testes (Cypress e Cucumber);
-- Testes de desempenho;
-- Testes de responsividade;
-- Registro de bugs e melhorias;
+- [x] Tarefa 4 - ✔️  Testes de responsividade;
+- [x] Tarefa 5 - ✔️  Testes de desempenho;
+- [x] Tarefa 6 - ✔️  Testes de manuais de acessibilidade;
+- [x] Tarefa 7 - ✔️  Registro de bugs e melhorias.
 
 ## ⚙️ Configuração do ambiente de testes
 >**NOTE**
@@ -469,6 +470,131 @@ Then('o botao de Enviar link fica desativado', () => {
     cy.get('button[type="submit"]').should('be.disabled');
 });
 ```
+>**NOTE**
+>
+>Ver vídeos da execução dos testes na pasta:
+>
+>cypress/videos-testes-automatizados
+
+## 📱 Testes de responsividade
+
+O teste de responsividade foi realizado com o caso de uso 'Buscar Profissional', utilizando simulações em dispositivos iPhone 6 e MacBook 11. A aplicação apresentou um comportamento responsivo adequado em ambos os modelos, ajustando-se corretamente às diferentes resoluções de tela.
+
+Código:
+Rever código do teste Buscar Profissional no tópico anterior
+
+Execução:
+Ver vídeo de execução do teste de buscar profissional na pasta:
+cypress/videos-testes-automatizados/video-teste-automatizado-busca.mp4
+
+## 📈 Testes de desempenho
+
+O teste de carga foi desenvolvido com o K6 para simular o acesso de usuários ao site https://paciente-staging.lacreisaude.com.br/. O teste executa uma carga de 5 usuários virtuais (VUs) durante 1 minuto. A cada iteração, o K6 faz uma requisição HTTP GET ao site e verifica se a resposta do servidor retorna com status 200, indicando sucesso. Um atraso de 1 segundo entre as requisições é inserido para simular um comportamento mais realista de navegação do usuário. O teste busca avaliar a performance do site sob uma carga simples de tráfego, mas podendo prever testes mais robustos.
+
+Código do teste de Performance
+```bash
+import http from 'k6/http';
+import { check, sleep } from 'k6';
+
+
+const url = 'https://paciente-staging.lacreisaude.com.br/';
+
+export let options = {
+  // Configuração de cenário de carga
+  vus: 5, // Número de usuários virtuais
+  duration: '1m', // Tempo de execução do teste
+};
+
+export default function () {
+  // Simula o acesso de um usuário ao site
+  let res = http.get(url);
+
+  // Verifica se a resposta do servidor foi bem-sucedida
+  check(res, {
+    'status é 200': (r) => r.status === 200,
+  });
+
+  // Atraso entre as requisições para simular o comportamento real de navegação
+  sleep(1);
+}
+```
+
+Resumo do Relatório de teste de Performance: 
+```bash
+Cenário do teste: 
+- Usuários virtuais simulados (VUs): 5 
+- Duração do teste: 1 minuto 
+
+Tipo de cenário: 5 usuários virtuais, todos executando o teste por 1 minuto com um "graceful stop" (tempo para finalizar as requisições de forma controlada). 
+
+Status das requisições: 
+- Checks: O teste passou em todas as verificações. A verificação principal foi se o status da resposta HTTP era 200 (sucesso). 
+- Resultado: 100% de sucesso (252 requisições validaram o status 200). 
+
+Desempenho da rede: 
+- Dados recebidos: 7.3 MB de dados recebidos ao longo do teste. 
+                   Taxa de recebimento: 119 kB/s. 
+
+Dados enviados: 35 kB de dados enviados. 
+                Taxa de envio: 571 B/s. 
+
+Tempos de resposta: 
+- Tempo médio da requisição (http_req_duration): 198.21 ms. 
+- Tempo mínimo: 166.94 ms. 
+- Tempo máximo: 826.97 ms. 
+Percentis: 
+- P90 (90% das requisições tiveram tempo inferior a 208.16 ms). 
+- P95 (95% das requisições tiveram tempo inferior a 398.36 ms). 
+
+Tempo de espera da requisição (http_req_waiting): 
+- Média: 191.79 ms. 
+- Mínimo: 166.34 ms. 
+- Máximo: 826.13 ms. 
+- Percentis semelhantes aos tempos gerais. 
+
+Outros dados de desempenho: 
+- Requisições falhadas: 0% (nenhuma requisição falhou). 
+- Número total de requisições: 252. 
+- Taxa de requisições: 4.13 requisições por segundo. 
+
+Interpretação dos Resultados: 
+- Status e Sucesso das Requisições: 
+  Todas as requisições realizadas retornaram o código de status 200, indicando que o servidor respondeu corretamente a todas as solicitações. Isso significa que não houve falhas no servidor ou problemas de configuração durante o teste. 
+
+Desempenho de Latência: 
+- O tempo médio de resposta de 198.21 ms é relativamente baixo, o que é um bom sinal de que o site está respondendo rapidamente. 
+- O tempo máximo de resposta de 826.97 ms pode ser um pouco mais alto, especialmente se for percebido em situações de pico de tráfego. 
+- A maioria das requisições (90% das requisições) foram respondidas em até 208.16 ms, o que indica que o site tem uma boa capacidade de resposta sob carga moderada. 
+
+Uso de Rede: 
+- O site transferiu 7.3 MB de dados durante o teste com uma taxa média de 119 kB/s. Esse valor indica o volume de dados trocados entre o servidor e o cliente durante o teste. 
+
+Taxa de Requisições: 
+- A taxa de requisições foi de 4.13 por segundo, o que significa que, durante o teste, cada usuário virtual fez requisições a uma taxa bastante constante. 
+
+Conclusões e Recomendações: 
+O site se comportou bem sob a carga de 5 usuários simultâneos, com 100% de sucesso nas requisições e tempos de resposta razoavelmente rápidos. 
+
+Pontos de atenção: 
+Embora a maioria das requisições tenham sido rápidas, a latência máxima de 826.97 ms pode ser um sinal de que, sob maior carga, o site pode começar a apresentar lentidão. Isso pode ser mais visível em horários de pico ou com maior número de usuários simultâneos. 
+Se o site for destinado a suportar grandes volumes de acesso, é essencial considerar otimizações no backend, balanceamento de carga ou mesmo melhorias na infraestrutura para manter os tempos de resposta dentro de padrões aceitáveis, mesmo em picos de tráfego.
+```
+
+## ♿️ Testes de manuais de acessibilidade
+
+Os testes de acessibilidade foram realizados manualmente, com a verificação do funcionamento do plugin VLibras, o qual operou corretamente tanto nas versões mobile quanto desktop. Quanto a outras melhorias de acessibilidade, elas estão detalhadas no próximo tópico.
+
+## 🐛 Registro de bugs e melhorias
+
+Foram realizados testes abrangentes para identificar possíveis bugs e áreas de melhoria na aplicação. Todos os problemas encontrados, bem como as sugestões de melhorias, foram devidamente analisados e estão relatados de forma detalhada no documento disponível na pasta: cypress/Relatório de Bugs e Melhorias. Este relatório contém informações sobre o comportamento do sistema, impactos das falhas e propostas de correções ou ajustes.
+
+## 🎯 Considerações Finais
+
+Gostaria de agradecer pela oportunidade de participar deste desafio para me tornar voluntário de QA da Lacrei. Fico muito feliz por ter tido a chance de aplicar meus conhecimentos e aprender mais sobre a área. A realização dos tópicos propostos foi um passo importante no meu desenvolvimento profissional, contribuindo para o meu crescimento em Quality Assurance. Estou ansioso para seguir no processo e, caso seja selecionado, para colaborar com a equipe e continuar aprendendo enquanto contribuo com a qualidade do trabalho. Agradeço novamente pela oportunidade e pela confiança!
+
+
+
+
 
 
 
