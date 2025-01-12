@@ -206,6 +206,14 @@ Given('estou logado na página no MacBook 11', () => {
     cy.get('[type="submit"]').click(); 
 });
 
+When('digito {string}', (text) => { 
+    cy.get('#search').type(text); 
+});
+
+And('clico em "Buscar"', () => {
+    cy.get('[type="submit"]').click(); 
+});
+
 Then('recebo uma lista de resultados no MacBook 11', () => {
     cy.url().should("include", "lista-de-profissionais/");
 });
