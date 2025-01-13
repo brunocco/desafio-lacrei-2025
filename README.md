@@ -14,7 +14,7 @@ O desafio propõe realizar uma série de atividades de Quality Assurance no ambi
 - [x] Tarefa 3 - ✔️  Execução com Automação de testes (Cypress e Cucumber);
 - [x] Tarefa 4 - ✔️  Testes de responsividade;
 - [x] Tarefa 5 - ✔️  Testes de desempenho;
-- [x] Tarefa 6 - ✔️  Testes de manuais de acessibilidade;
+- [x] Tarefa 6 - ✔️  Testes manuais de acessibilidade;
 - [x] Tarefa 7 - ✔️  Registro de bugs e melhorias.
 
 ## ⚙️ Configuração do ambiente de testes
